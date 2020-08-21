@@ -22,7 +22,7 @@ $breakpoint-lg: 717px;
 
 @import "colors";
 
-.chart-area {
+.chart-area-apple-2t {
   @import "type";
   @import "highcharts";
 
@@ -51,14 +51,68 @@ $breakpoint-lg: 717px;
     width: 100%;
     height: 300px;
     margin-top: -10px;
-    @include sm-md-xl {
-      height: 400px;
-    }
   }
 
   & .grow-logo {
     width: 214px;
     margin-top: 20px;
+  }
+
+  & #chart-container-apple-2t-1 {
+    .highcharts-yaxis-labels {
+      fill: $slate-secondary-5;
+      // use this to change the axis label
+      & span:last-child {
+        &:before {
+          content: "$";
+      }
+      }
+    }
+  }
+
+  & #chart-container-apple-2t-2 {
+    .highcharts-yaxis-labels {
+      fill: $slate-secondary-5;
+      // use this to change the axis label
+      & span:last-child {
+        transform: translate(10px,0) !important;
+        &:after {
+          content: "%";
+      }
+      }
+    }
+    
+  }
+
+  & #chart-container-apple-2t-3 {
+    .highcharts-yaxis-labels {
+      fill: $slate-secondary-5;
+      // use this to change the axis label
+      & span:last-child {
+        &:before {
+          content: "$";
+      }
+      }
+    }
+    .highcharts-color-0 {
+      fill: $slate-secondary-3;
+      stroke: $slate-secondary-3;
+    }
+    
+    .highcharts-color-1 {
+      fill: $green-primary;
+      stroke: $green-primary;
+    }
+    
+    .highcharts-color-2 {
+      fill: $slate-secondary-4;
+      stroke: $slate-secondary-4;
+    }
+    
+    .highcharts-color-3 {
+      fill: $slate-secondary-5;
+      stroke: $slate-secondary-5;
+    }
   }
   
 }

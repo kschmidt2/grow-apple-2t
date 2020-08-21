@@ -12,27 +12,104 @@ Highcharts.setOptions({
     }
 });
 
-let chartId = document.getElementById("chart-container");
-
-// checks for the chart ID and displays a backup image if the browser can't find it
-setTimeout(function() {
-    if(chartId.innerHTML === "") {
-        // console.log('noId');
-        let chartArea = document.getElementsByClassName("chart-area");
-        for(var i = 0; i < chartArea.length; i++) {
-            chartArea[i].style.display = "none";
-        } 
-        // insert chart screenshot here
-        document.getElementById("chart-fallback").innerHTML += '<img src="https://fm-static.cnbc.com/awsmedia/chart/2019/10/08/chart-error_wide.1570569331252.png" style="width: 100%;max-width:660px">';
-    } else {
-        // console.log('yesId')
-    }
-},500);
+let chartId1 = document.getElementById("chart-container-apple-2t-1");
+let chartId2 = document.getElementById("chart-container-apple-2t-2");
+let chartId3 = document.getElementById("chart-container-apple-2t-3");
 
 function drawHighcharts() {
-    Highcharts.chart(chartId, {
+    Highcharts.chart(chartId1, {
         chart: {
-            type: 'bar',
+            type: 'area',
+            styledMode: true,
+            spacingBottom: 25,
+            spacingRight: 100,
+            spacingLeft: 10,
+            spacingTop: 20
+        }, 
+        title: {
+            text: null
+        },
+        data: {
+            googleSpreadsheetKey: '1UwsI9VsnLBKTTgBX72_L2ziJ2reXdhEK4biE0T2Xr8k'
+        },
+        // for line charts only
+        plotOptions: {
+            series: {
+                lineWidth: 1,
+                clip: false,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    fillColor: '#ffffff',
+                    states: {
+                        hover: {
+                            fillColor: '#ffffff'
+                        }
+                    }
+                }
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        xAxis: {
+            labels: {
+                style: {
+                    whiteSpace: 'nowrap'
+                }
+            },
+            tickLength: 5,
+            // edits xAxis ticks
+            // dateTimeLabelFormats: {
+            //     week: '%b. %e',
+            // },
+            // tickInterval: 24 * 3600 * 1000 * 7
+        },
+        yAxis: {
+            title: false,
+            labels: {
+                useHTML: true,
+                overflow: 'allow',
+                formatter: function () {
+                    return (this.value/1000000) + 'T';
+                },
+            },
+            max: 2000000,
+            // adds commas to thousands
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            shadow: false,
+            padding: 10,
+            valueDecimals: 0,
+            valuePrefix: '$',
+            valueSuffix: ',000,000',
+        },
+        responsive: {
+            rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                chart: {
+                spacingRight: 10
+                },
+                legend: {
+                    align: 'left',
+                    x: -18
+                },
+                tooltip: {
+                    enabled: false
+                }
+            }
+            }]
+        }
+    }),
+    Highcharts.chart(chartId2, {
+        chart: {
+            type: 'line',
             styledMode: true,
             spacingBottom: 25,
             spacingRight: 100,
@@ -43,37 +120,37 @@ function drawHighcharts() {
             text: null
         },
         data: {
-            googleSpreadsheetKey: '1YOKb5l2VM4aAB2r20N_1aT_1vEajYrP3U-U3A6lZbC0'
+            googleSpreadsheetKey: '1UwsI9VsnLBKTTgBX72_L2ziJ2reXdhEK4biE0T2Xr8k',
+            googleSpreadsheetWorksheet: 2
         },
         // for bar charts only
-        plotOptions: {
-            series: {
-                groupPadding: 0.1
-            } 
-        },
-        // for line charts only
         // plotOptions: {
         //     series: {
-        //         lineWidth: 1,
-        //         // clip: false,
-        //         marker: {
-        //             enabled: false,
-        //             symbol: 'circle',
-        //             fillColor: '#ffffff',
-        //             states: {
-        //                 hover: {
-        //                     fillColor: '#ffffff'
-        //                 }
-        //             }
-        //         }
-        //     }
+        //         groupPadding: 0.1
+        //     } 
         // },
+        // for line charts only
+        plotOptions: {
+            series: {
+                lineWidth: 1,
+                // clip: false,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    fillColor: '#ffffff',
+                    states: {
+                        hover: {
+                            fillColor: '#ffffff'
+                        }
+                    }
+                }
+            }
+        },
         legend: {
             align: 'right',
             symbolRadius: 0,
-            verticalAlign: 'top',
-            x: 10,
-            itemMarginTop: -10
+            verticalAlign: 'float',
+            x: -10,
         },
         xAxis: {
             labels: {
@@ -104,7 +181,9 @@ function drawHighcharts() {
         },
         tooltip: {
             shadow: false,
-            padding: 10
+            padding: 10,
+            valueSuffix: '%',
+            valueDecimals: 1
         },
         responsive: {
             rules: [{
@@ -117,7 +196,93 @@ function drawHighcharts() {
                 },
                 legend: {
                     align: 'left',
-                    x: -18
+                    x: 50
+                },
+                tooltip: {
+                    enabled: false
+                }
+            }
+            }]
+        }
+    }),
+    Highcharts.chart(chartId3, {
+        chart: {
+            type: 'column',
+            styledMode: true,
+            spacingBottom: 25,
+            spacingRight: 100,
+            spacingLeft: 10,
+            spacingTop: 20
+        }, 
+        title: {
+            text: null
+        },
+        data: {
+            googleSpreadsheetKey: '1UwsI9VsnLBKTTgBX72_L2ziJ2reXdhEK4biE0T2Xr8k',
+            googleSpreadsheetWorksheet: 3,
+            endColumn: 4
+        },
+        // for bar charts only
+        plotOptions: {
+            series: {
+                // groupPadding: 0,
+                // pointPadding: 0,
+            } 
+        },
+        legend: {
+            align: 'left',
+            symbolRadius: 0,
+            verticalAlign: 'float',
+            x: 50,
+            y: 15
+        },
+        xAxis: {
+            labels: {
+                style: {
+                    whiteSpace: 'nowrap'
+                }
+            },
+            tickLength: 5,
+            // edits xAxis ticks
+            // dateTimeLabelFormats: {
+            //     week: '%b. %e',
+            // },
+            // tickInterval: 24 * 3600 * 1000 * 7
+        },
+        yAxis: {
+            title: false,
+            labels: {
+                useHTML: true,
+                overflow: 'allow',
+                formatter: function () {
+                    return (this.value/1000000) + 'T';
+                },
+            },
+            max: 2000000
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            shadow: false,
+            padding: 10,
+            valueDecimals: 0,
+            valuePrefix: '$',
+            valueSuffix: ',000,000',
+        },
+        responsive: {
+            rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                chart: {
+                spacingRight: 10
+                },
+                legend: {
+                    align: 'left',
+                    x: 50,
+                    y: 5
                 },
                 tooltip: {
                     enabled: false
